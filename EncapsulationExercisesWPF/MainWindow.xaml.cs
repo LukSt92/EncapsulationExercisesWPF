@@ -20,9 +20,25 @@ namespace EncapsulationExercisesWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        Random random = new Random();
+        SwordDamage swordDamage = new SwordDamage();
         public MainWindow()
         {
             InitializeComponent();
+            swordDamage.SetMagic(false);
+            swordDamage.SetFlaming(false);
+            RollDice();
+        }
+
+        public void RollDice()
+        {
+            swordDamage.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+            DisplayDamage();
+        }
+
+        void DisplayDamage()
+        {
+            damage.Text = "Rolled " + swordDamage.Roll + " for " + swordDamage.Damage + " HP";
         }
     }
 }
