@@ -10,42 +10,58 @@ namespace EncapsulationExercisesWPF
 {
     class SwordDamage
     {
-        public const int BASE_DAMAGE = 3;
-        public const int FLAME_DAMAGE = 2;
+        public SwordDamage(int startingRoll)
+        {
+            roll = startingRoll;
+            CalculateDamage();
+        }
 
-        public int Roll;
-        private decimal magicMultiplier = 1M;
-        private int flamingDamage = 0;
-        public int Damage;
+        private const int BASE_DAMAGE = 3;
+        private const int FLAME_DAMAGE = 2;
 
+        private int roll;
+        private bool flaming;
+        private bool magic;
+        public int Damage { get; private set; }
+        public int Roll
+        {
+            get
+            { return roll; }
+            set
+            {
+                roll = value;
+                CalculateDamage();
+            }
+        }
+        public bool Flaming
+        {
+            get
+            { return flaming; }
+            set
+            {
+                flaming = value;
+                CalculateDamage();
+            }
+        }
+        public bool Magic
+        {
+            get
+            { return magic; }
+            set
+            {
+                magic = value;
+                CalculateDamage();
+            }
+        }
         private void CalculateDamage()
         {
-            Damage = (int)(Roll * magicMultiplier) + BASE_DAMAGE + flamingDamage;
-            Debug.WriteLine($"CalculateDamage finished: {Damage} (roll: {Roll})");
-        }
-
-        public void SetMagic(bool isMagic)
-        {
-            if (isMagic)
-            {
-                magicMultiplier = 1.75M;
-            }
-            else
-            {
-                magicMultiplier = 1M;
-            }
-            CalculateDamage();
-            Debug.WriteLine($"SetMagic finished: {Damage} (roll: {Roll})");
-        }
-        
-        public void SetFlaming(bool isFlaming)
-        {
-            CalculateDamage();
-            if (isFlaming)
+            Damage = Roll + BASE_DAMAGE;
+            if (Flaming == true)
             {
                 Damage += FLAME_DAMAGE;
             }
-            Debug.WriteLine($"SetFlaming finished: {Damage} (roll: {Roll})");
+            if (Magic == true)
+                Damage = (int)(Damage * 1.75M);
         }
     }
 }
